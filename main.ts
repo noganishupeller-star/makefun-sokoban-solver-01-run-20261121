@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync, readdirSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';
 
 function solve(level) {
-  const lines = level.trimEnd().split(String.fromCharCode(10));
+  const lines = level.trimEnd().split('\n');
   const w = lines[0].length;
   const map = lines.join('');
   const steps = [-w,w,-1,1], letters = 'udlr';
@@ -68,14 +68,14 @@ function solve(level) {
     }
     const initial=[...boxes].filter(p=>room.has(p)).sort((a,b)=>a-b);
     const buckets=[], seen=new Map();
-    function enqueue(bs, at, g, prior, moves) {
+    function enqueue(bs,at,g,prior,moves) {
       const h=heuristic(bs);
       if(!Number.isFinite(h)) return;
       const reach=flood(at,allowed,new Set(bs));
       const key=bs.join(',')+'/'+Math.min(...reach.keys());
       if((seen.get(key)??Infinity)<=g) return;
       seen.set(key,g);
-      (buckets[f+h]??=[]).push({bs,reach,g,key,h,prior,moves});
+      (buckets[g+h]??=[]).push({bs,reach,g,key,h,prior,moves});
     }
     enqueue(initial,landing,0,null,'');
     let found=false;
