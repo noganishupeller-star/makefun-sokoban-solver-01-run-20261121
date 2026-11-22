@@ -12,7 +12,7 @@ function solve(level) {
   for (let i = 0; i < map.length; i++) {
     if ('$*'.includes(map[i])) boxes.add(i);
     if ('.*'.includes(map[i])) goals.add(i);
-  }
+  }  
   function flood(start, allowed, blocked) {
     const paths = new Map([[start,'']]), queue = [start];
     for (let i=0;i<queue.length;i++) {
