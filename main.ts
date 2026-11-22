@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync, readdirSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';
 
 function solve(level) {
-  const lines = level.trimEnd().split(' ');
+  const lines = level.trimEnd().split(String.fromCharCode(10));
   const w = lines[0].length;
   const map = lines.join('');
   const steps = [-w,w,-1,1], letters = 'udlr';
@@ -12,7 +12,7 @@ function solve(level) {
   for (let i = 0; i < map.length; i++) {
     if ('$*'.includes(map[i])) boxes.add(i);
     if ('.*'.includes(map[i])) goals.add(i);
-  }  
+  }
   function flood(start, allowed, blocked) {
     const paths = new Map([[start,'']]), queue = [start];
     for (let i=0;i<queue.length;i++) {
@@ -75,7 +75,7 @@ function solve(level) {
       const key=bs.join(',')+'/'+Math.min(...reach.keys());
       if((seen.get(key)??Infinity)<=g) return;
       seen.set(key,g);
-      (buckets[g+h]??=[]).push({bs,reach,g,key,h,prior,moves});
+      (buckets[f+h]??=[]).push({bs,reach,g,key,h,prior,moves});
     }
     enqueue(initial,landing,0,null,'');
     let found=false;
